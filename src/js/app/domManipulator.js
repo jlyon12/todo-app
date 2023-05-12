@@ -1,0 +1,253 @@
+import format from 'date-fns/format';
+import cacheDom from './cacheDom';
+import projectModule from '../components/project';
+import taskModule from '../components/task';
+import DeleteIcon from '../../assets/images/delete-icon.svg';
+import DeleteIconHover from '../../assets/images/delete-icon-hover.svg';
+
+const hideTaskForm = () => {
+	const { formModule } = cacheDom;
+	formModule.classList.add('hidden');
+};
+
+const showTaskForm = () => {
+	const { formModule } = cacheDom;
+	formModule.classList.remove('hidden');
+};
+// Create DOM elements related to Projects
+const createProjectSelectOption = (project) => {
+	const { taskProjectSelect } = cacheDom;
+	const selectOption = document.createElement('option');
+	selectOption.value = project.name;
+	selectOption.textContent = project.name;
+	taskProjectSelect.appendChild(selectOption);
+};
+
+const renderProjectSelectOptions = () => {
+	const { taskProjectSelect } = cacheDom;
+	const defaultOption = document.createElement('option');
+	defaultOption.value = 'Inbox';
+	defaultOption.textContent = 'Send to Inbox';
+	taskProjectSelect.textContent = '';
+	taskProjectSelect.appendChild(defaultOption);
+	projectModule.allProjects.forEach((project) => {
+		if (project.name !== 'Inbox') {
+			createProjectSelectOption(project);
+		}
+	});
+};
+
+const createProjectWrapper = (project) => {
+	const projectList = cacheDom.listProjects;
+	const projectListItem = document.createElement('li');
+	const projectLink = document.createElement('a');
+	projectLink.classList.add('projectLink');
+	projectLink.setAttribute('href', `#${project.name}`);
+	projectLink.dataset.projectName = project.name;
+	projectLink.textContent = project.name;
+	const btnDeleteProject = document.createElement('button');
+	btnDeleteProject.setAttribute('class', `btnDeleteProject`);
+	const deleteIcon = new Image();
+	deleteIcon.src = DeleteIcon;
+
+	const disableHoverEffect = () => {
+		deleteIcon.src = DeleteIcon;
+	};
+	const enableHoverEffect = () => {
+		deleteIcon.src = DeleteIconHover;
+	};
+	deleteIcon.addEventListener('mouseover', enableHoverEffect);
+	deleteIcon.addEventListener('mouseleave', disableHoverEffect);
+	btnDeleteProject.appendChild(deleteIcon);
+
+	const formatID = project.name.replace(/ /g, '-');
+	projectListItem.setAttribute('id', `${formatID}`);
+
+	projectListItem.appendChild(projectLink);
+	projectListItem.appendChild(btnDeleteProject);
+	projectList.appendChild(projectListItem);
+	if (project.name === 'Inbox') {
+		projectListItem.classList.add('hidden');
+	}
+};
+
+const renderProjectList = () => {
+	const projectList = cacheDom.listProjects;
+	projectList.textContent = '';
+	projectModule.allProjects.forEach((project) => {
+		createProjectWrapper(project);
+	});
+};
+
+// Create DOM elements related to Tasks
+const getTaskFormValues = () => {
+	const title = cacheDom.titleInput.value;
+	const description = cacheDom.descriptionInput.value;
+	const priority = cacheDom.priorityInput.value;
+	const dueDate = cacheDom.dueDateInput.value;
+	const taskCompleted = cacheDom.taskCompletedInput.checked;
+	const associatedProject = cacheDom.taskProjectSelect.value;
+
+	return {
+		title,
+		description,
+		priority,
+		dueDate,
+		taskCompleted,
+		associatedProject,
+	};
+};
+
+const updateFormToEditTaskMode = () => {
+	const { btnSubmitTask, btnSubmitUpdatedTask, spanModuleTitle } = cacheDom;
+	btnSubmitTask.classList.add('hidden');
+	btnSubmitUpdatedTask.classList.remove('hidden');
+	spanModuleTitle.textContent = 'Edit';
+};
+
+const updateFormToAddNewTaskMode = () => {
+	const { btnSubmitTask, btnSubmitUpdatedTask, spanModuleTitle } = cacheDom;
+	btnSubmitTask.classList.remove('hidden');
+	btnSubmitUpdatedTask.classList.add('hidden');
+	spanModuleTitle.textContent = 'Add';
+};
+
+const updateFormValuesWithCurrentTask = (projectName, taskTitle) => {
+	const thisTask = taskModule.returnThisTask(projectName, taskTitle);
+	cacheDom.titleInput.value = thisTask.title;
+	cacheDom.descriptionInput.value = thisTask.description;
+	cacheDom.priorityInput.value = thisTask.priority;
+	cacheDom.dueDateInput.value = thisTask.dueDate;
+	cacheDom.taskCompletedInput.checked = thisTask.taskCompleted;
+	cacheDom.taskProjectSelect.value = thisTask.associatedProject;
+};
+
+const createTaskWrapper = (task) => {
+	const { taskCollection } = cacheDom;
+	const taskWrapper = document.createElement('div');
+	taskWrapper.classList.add('task-wrapper');
+	const taskHeader = document.createElement('div');
+	taskHeader.classList.add('task-header');
+	const title = document.createElement('h3');
+	title.textContent = task.title;
+
+	const dueDate = document.createElement('p');
+	const dateArray = task.dueDate.split('-');
+	const formatDate = format(
+		new Date(dateArray[0], dateArray[1] - 1, dateArray[2]),
+		'PPP'
+	);
+	dueDate.textContent = formatDate;
+	const btnComplete = document.createElement('input');
+	btnComplete.type = 'checkbox';
+	btnComplete.classList.add('btnMarkComplete');
+	if (task.isCompleted === true) {
+		btnComplete.checked = true;
+	} else btnComplete.checked = false;
+
+	taskHeader.appendChild(title);
+	taskHeader.appendChild(dueDate);
+	taskHeader.appendChild(btnComplete);
+	const taskBody = document.createElement('div');
+	taskBody.classList.add('task-body');
+	const description = document.createElement('p');
+	description.textContent = task.description;
+	taskBody.appendChild(description);
+	const taskFooter = document.createElement('div');
+	taskFooter.classList.add('task-footer');
+	const project = document.createElement('p');
+	project.textContent = 'Project: ';
+	const projectSpan = document.createElement('span');
+	project.appendChild(projectSpan);
+	projectSpan.textContent = task.associatedProject;
+	if (task.associatedProject === 'Inbox') {
+		projectSpan.classList.add('task-project-inbox');
+	}
+	const priority = document.createElement('p');
+	const prioritySpan = document.createElement('span');
+	prioritySpan.textContent = task.priority;
+	if (task.priority === 'Low') {
+		prioritySpan.classList.add('task-priority-low');
+	} else if (task.priority === 'High') {
+		prioritySpan.classList.add('task-priority-high');
+	} else if (task.priority === 'Medium') {
+		prioritySpan.classList.add('task-priority-medium');
+	}
+	priority.textContent = 'Priority: ';
+	priority.appendChild(prioritySpan);
+	const btnDelete = document.createElement('button');
+	btnDelete.classList.add('button');
+	btnDelete.classList.add('btnDeleteTask');
+	btnDelete.textContent = 'Delete Task';
+	const btnEdit = document.createElement('button');
+	btnEdit.classList.add('button');
+	btnEdit.classList.add('btnEditTask');
+	btnEdit.textContent = 'Edit Task';
+	taskWrapper.dataset.projectName = task.associatedProject;
+	taskWrapper.dataset.taskTitle = task.title;
+	title.addEventListener('click', () => {
+		taskBody.classList.toggle('hidden');
+		taskFooter.classList.toggle('hidden');
+	});
+	taskFooter.appendChild(project);
+	taskFooter.appendChild(priority);
+	taskFooter.appendChild(btnDelete);
+	taskFooter.appendChild(btnEdit);
+	taskWrapper.appendChild(taskHeader);
+	// taskBody.classList.add('hidden');
+	taskWrapper.appendChild(taskBody);
+	// taskFooter.classList.add('hidden');
+
+	taskWrapper.appendChild(taskFooter);
+	taskCollection.appendChild(taskWrapper);
+};
+
+const renderAllTasks = () => {
+	const { taskCollection } = cacheDom;
+	taskCollection.textContent = '';
+	taskModule.getAllTasks().forEach((task) => {
+		createTaskWrapper(task);
+	});
+};
+
+const renderInboxTasks = () => {
+	const { taskCollection } = cacheDom;
+	taskCollection.textContent = '';
+	projectModule
+		.getProjectTasks('Inbox')
+		.forEach((task) => createTaskWrapper(task));
+};
+
+const renderProjectTasks = (projectName) => {
+	const { taskCollection } = cacheDom;
+	taskCollection.textContent = '';
+	projectModule
+		.getProjectTasks(projectName)
+		.forEach((task) => createTaskWrapper(task));
+};
+const renderTodayTasks = () => {
+	const { taskCollection } = cacheDom;
+	taskCollection.textContent = '';
+	taskModule.getTodaysTasks().forEach((task) => createTaskWrapper(task));
+};
+
+const renderWeekTasks = () => {
+	const { taskCollection } = cacheDom;
+	taskCollection.textContent = '';
+	taskModule.getWeekTasks().forEach((task) => createTaskWrapper(task));
+};
+export {
+	renderProjectList,
+	renderInboxTasks,
+	hideTaskForm,
+	showTaskForm,
+	renderProjectSelectOptions,
+	renderAllTasks,
+	getTaskFormValues,
+	updateFormValuesWithCurrentTask,
+	updateFormToEditTaskMode,
+	updateFormToAddNewTaskMode,
+	renderProjectTasks,
+	renderTodayTasks,
+	renderWeekTasks,
+};

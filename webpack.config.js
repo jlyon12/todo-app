@@ -1,7 +1,7 @@
 const path = require('path');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 module.exports = {
 	mode: 'development',
 	entry: {
@@ -22,6 +22,10 @@ module.exports = {
 	},
 	module: {
 		rules: [
+			{
+				test: /\.html$/i,
+				loader: 'html-loader',
+			},
 			{
 				test: /\.(css|scss)$/i,
 				use: ['style-loader', 'css-loader', 'sass-loader'],
@@ -44,5 +48,6 @@ module.exports = {
 			filename: 'index.html',
 			template: './src/template.html',
 		}),
+		new NodePolyfillPlugin(),
 	],
 };

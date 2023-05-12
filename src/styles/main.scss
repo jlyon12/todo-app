@@ -1,0 +1,329 @@
+/* lato-300 - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 300;
+	src: url('../assets/fonts/lato-v23-latin-300.eot'); /* IE9 Compat Modes */
+	src: url('../assets/fonts/lato-v23-latin-300.eot?#iefix')
+			format('embedded-opentype'),
+		/* IE6-IE8 */ url('../assets/fonts/lato-v23-latin-300.woff2')
+			format('woff2'),
+		/* Super Modern Browsers */ url('../assets/fonts/lato-v23-latin-300.woff')
+			format('woff'),
+		/* Modern Browsers */ url('../assets/fonts/lato-v23-latin-300.ttf')
+			format('truetype'),
+		/* Safari, Android, iOS */
+			url('../assets/fonts/lato-v23-latin-300.svg#Lato') format('svg'); /* Legacy iOS */
+}
+
+/* lato-regular - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../assets/fonts/lato-v23-latin-regular.eot'); /* IE9 Compat Modes */
+	src: url('../assets/fonts/lato-v23-latin-regular.eot?#iefix')
+			format('embedded-opentype'),
+		/* IE6-IE8 */ url('../assets/fonts/lato-v23-latin-regular.woff2')
+			format('woff2'),
+		/* Super Modern Browsers */
+			url('../assets/fonts/lato-v23-latin-regular.woff') format('woff'),
+		/* Modern Browsers */ url('../assets/fonts/lato-v23-latin-regular.ttf')
+			format('truetype'),
+		/* Safari, Android, iOS */
+			url('../assets/fonts/lato-v23-latin-regular.svg#Lato') format('svg'); /* Legacy iOS */
+}
+
+/* lato-700 - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 700;
+	src: url('../assets/fonts/lato-v23-latin-700.eot'); /* IE9 Compat Modes */
+	src: url('../assets/fonts/lato-v23-latin-700.eot?#iefix')
+			format('embedded-opentype'),
+		/* IE6-IE8 */ url('../assets/fonts/lato-v23-latin-700.woff2')
+			format('woff2'),
+		/* Super Modern Browsers */ url('../assets/fonts/lato-v23-latin-700.woff')
+			format('woff'),
+		/* Modern Browsers */ url('../assets/fonts/lato-v23-latin-700.ttf')
+			format('truetype'),
+		/* Safari, Android, iOS */
+			url('../assets/fonts/lato-v23-latin-700.svg#Lato') format('svg'); /* Legacy iOS */
+}
+
+$ff-primary: 'Lato', sans-serif;
+$fw-light: 300;
+$fw-regular: 400;
+$fw-bold: 700;
+
+$clr-light: #fffcf9;
+$clr-dark: #1d1d1d;
+$clr-accent-100: #9f9f9f;
+$clr-accent-200: #363636;
+$clr-accent-300: #252525;
+
+body {
+	font-family: $ff-primary;
+	font-weight: $fw-regular;
+	color: $clr-light;
+}
+
+.fieldset {
+	padding: 0;
+	border-color: transparent;
+}
+
+.page-wrapper {
+	min-height: 100vh;
+	display: grid;
+	grid-template-areas: 'header' 'main';
+	grid-template-rows: min-content auto;
+}
+
+.header {
+	background-color: $clr-dark;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 1rem;
+	.button {
+		background-color: transparent;
+		border: transparent;
+		width: 3rem;
+	}
+	svg {
+		color: $clr-light;
+		height: 3rem;
+	}
+	svg:hover {
+		color: #6cbd6a;
+		transform: scale(1.05);
+	}
+	button:focus {
+		animation: transform 1s 2 ease-in-out;
+		transform: translateY(360);
+		animation: transform 1s 2 ease-in-out;
+	}
+}
+.main-content {
+	position: relative;
+	display: grid;
+	grid-template-areas: 'projects tasks';
+	grid-template-columns: 1fr 3fr;
+	background-color: $clr-light;
+}
+
+.project-container {
+	grid-area: projects;
+	background-color: $clr-accent-300;
+	display: grid;
+	padding: 1rem;
+	grid-template-rows: repeat(3, min-content) 1fr;
+	gap: 1rem;
+	button {
+		height: fit-content;
+	}
+}
+.task-filters ul {
+	display: grid;
+	gap: 1rem;
+	margin-bottom: 2rem;
+	a {
+		text-decoration: none;
+		color: $clr-light;
+	}
+	a:hover {
+		transform: scale(1.05);
+		font-weight: $fw-bold;
+	}
+}
+.project-form-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	input {
+		border: transparent;
+		border-radius: 10px;
+		background-color: $clr-dark;
+		opacity: 0.8;
+		color: $clr-light;
+		padding: 0.5rem 1rem;
+	}
+	button {
+		background-color: transparent;
+		border: transparent;
+		width: 3rem;
+	}
+	svg {
+		height: 2rem;
+		color: $clr-accent-100;
+	}
+	svg:hover {
+		color: $clr-light;
+	}
+}
+
+.project-list {
+	list-style-type: none;
+	padding: 0;
+	margin-top: 2rem;
+	gap: 2rem;
+	li {
+		margin-top: 1.5rem;
+		margin-inline: 3rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1.5rem;
+	}
+	a {
+		text-decoration: none;
+		color: $clr-light;
+	}
+	a:hover {
+		transform: scale(1.05);
+		font-weight: $fw-bold;
+	}
+	button {
+		background-color: transparent;
+		border: transparent;
+	}
+	img {
+		height: 1.5rem;
+	}
+}
+
+.module-form {
+	grid-area: tasks;
+	width: fit-content;
+	place-self: center;
+	display: grid;
+	place-content: center;
+	gap: 1.5rem;
+	padding: 0.5rem 1rem;
+	background-color: $clr-dark;
+	color: $clr-light;
+	border-radius: 10px;
+	border: 10px solid $clr-accent-300;
+	p {
+		font-weight: $fw-bold;
+	}
+}
+.module-header {
+	display: grid;
+	grid-auto-flow: column;
+	align-items: center;
+	justify-content: space-between;
+	p {
+		font-weight: $fw-bold;
+		font-size: 1.5rem;
+	}
+	svg {
+		height: 3rem;
+		color: #ea466e;
+	}
+	svg:hover {
+		transform: scale(1.05);
+		color: #ec7190;
+	}
+	.btn-close {
+		width: 3rem;
+
+		background-color: transparent;
+		border: transparent !important;
+	}
+	button {
+		width: fit-content;
+	}
+}
+.task-fieldset {
+	display: grid;
+	gap: 1rem;
+	.form-control {
+		display: grid;
+	}
+	textarea {
+		resize: none;
+	}
+}
+.tasks-container {
+	grid-area: tasks;
+	background-color: $clr-accent-200;
+	padding: 2rem;
+}
+
+.task-wrapper {
+	background-color: $clr-dark;
+	color: $clr-light;
+	display: grid;
+	padding: 1rem;
+	margin: 1.5rem;
+	border-radius: 10px;
+	word-wrap: break-word;
+	word-break: break-all;
+	.task-header,
+	.task-body,
+	.task-footer {
+		display: grid;
+		grid-auto-flow: column;
+		padding: 0.5rem;
+	}
+
+	.task-header {
+		grid-template-columns: auto auto min-content;
+		align-items: center;
+		h3 {
+			font-size: 18px;
+		}
+		p {
+			margin-left: auto;
+			margin-right: 2rem;
+			font-weight: $fw-light;
+		}
+	}
+	.task-body p {
+		font-weight: $fw-light;
+	}
+	.task-footer {
+		display: grid;
+		grid-template-columns: auto auto max-content max-content;
+		gap: 2rem;
+		p:not(span) {
+			color: $clr-accent-100;
+		}
+	}
+	.button {
+		width: fit-content;
+		justify-self: end;
+	}
+	.btnMarkComplete {
+		justify-self: end;
+		height: 25px;
+		width: 25px;
+		border: transparent !important;
+	}
+
+	span {
+		font-weight: $fw-light;
+	}
+	.task-priority-low {
+		color: #6cbd6a;
+	}
+	.task-priority-medium {
+		color: #f8d648;
+	}
+	.task-priority-high {
+		color: #ea466e;
+	}
+	.task-project-inbox {
+		color: cornflowerblue;
+	}
+}
+
+.hidden {
+	display: none !important;
+}
