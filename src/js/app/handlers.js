@@ -1,39 +1,42 @@
 /* eslint-disable no-use-before-define */
-import projectModule from '../components/project';
-import taskModule from '../components/task';
+import { projectController, taskController } from './appController';
 import cacheDom from './cacheDom';
 import {
-	renderProjectList,
-	renderInboxTasks,
 	hideTaskForm,
 	showTaskForm,
-	renderProjectSelectOptions,
 	getTaskFormValues,
 	updateFormValuesWithCurrentTask,
 	updateFormToEditTaskMode,
 	updateFormToAddNewTaskMode,
+	renderProjectSelectOptions,
+	renderProjectList,
 	renderAllTasks,
+	renderInboxTasks,
 	renderProjectTasks,
 	renderTodayTasks,
 	renderWeekTasks,
 } from './domManipulator';
 
 const {
-	btnNewTask,
+	// Functions for updating nodeLists
+	btnsDeleteTasks,
+	btnsEditTasks,
+	btnsMarkComplete,
+	linksProjects,
+	btnsDeleteProject,
+	// Links for Project Filters
+	allTasksFilter,
+	inboxFilter,
+	todayFilter,
+	weekFilter,
+	// Project Form and Project Elements
 	formProject,
 	projectNameInput,
-	btnsDeleteProject,
-	btnsDeleteTasks,
-	btnsMarkComplete,
-	btnsEditTasks,
-	btnSubmitUpdatedTask,
-	linksProjects,
+	// Add Task Form and related elements
 	btnCloseModule,
 	formTask,
-	allTasksFilter,
-	todayFilter,
-	inboxFilter,
-	weekFilter,
+	btnSubmitUpdatedTask,
+	btnNewTask,
 } = cacheDom;
 
 const addClickListenersToRenderedNodes = () => {
@@ -84,7 +87,7 @@ const projectLinkClick = (e) => {
 
 formProject.addEventListener('submit', (e) => {
 	e.preventDefault();
-	projectModule.createProject(projectNameInput.value);
+	projectController.createProject(projectNameInput.value);
 	renderProjectList();
 	renderProjectSelectOptions();
 	formProject.reset();
@@ -94,7 +97,7 @@ formProject.addEventListener('submit', (e) => {
 const deleteProjectClick = (e) => {
 	const projectId = e.target.parentNode.id;
 	const projectName = projectId.replace(/-/g, ' ');
-	projectModule.deleteProject(projectName);
+	projectController.deleteProject(projectName);
 	renderProjectList();
 	addClickListenersToRenderedNodes();
 };
@@ -118,7 +121,7 @@ formTask.addEventListener('submit', (e) => {
 	} = getTaskFormValues();
 
 	if (btnSubmitUpdatedTask.classList.contains('hidden')) {
-		taskModule.createTask(
+		taskController.createTask(
 			title,
 			description,
 			priority,
@@ -128,7 +131,7 @@ formTask.addEventListener('submit', (e) => {
 		);
 	} else if (!btnSubmitUpdatedTask.classList.contains('hidden')) {
 		const { taskTitle, projectName } = formProject.dataset;
-		taskModule.editTask(
+		taskController.editTask(
 			projectName,
 			taskTitle,
 			title,
@@ -157,14 +160,14 @@ const editTaskClick = (e) => {
 
 const deleteTaskClick = (e) => {
 	const { taskTitle, projectName } = e.target.parentNode.parentNode.dataset;
-	taskModule.deleteTask(projectName, taskTitle);
+	taskController.deleteTask(projectName, taskTitle);
 	renderAllTasks();
 	addClickListenersToRenderedNodes();
 };
 
 const markTaskCompleteClick = (e) => {
 	const { taskTitle, projectName } = e.target.parentNode.parentNode.dataset;
-	taskModule.markTaskCompleted(projectName, taskTitle);
+	taskController.markTaskCompleted(projectName, taskTitle);
 	renderAllTasks();
 	addClickListenersToRenderedNodes();
 };

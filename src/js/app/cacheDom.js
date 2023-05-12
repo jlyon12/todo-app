@@ -38,27 +38,29 @@ const cacheDom = (() => {
 	const btnSubmitUpdatedTask = document.getElementById('btnSubmitUpdatedTask');
 	const btnReset = document.getElementById('#btnResetForm');
 	return {
-		allTasksFilter,
-		inboxFilter,
-		todayFilter,
-		weekFilter,
-		taskCollection,
+		// Functions for updating nodeLists
 		btnsDeleteTasks,
 		btnsEditTasks,
 		btnsMarkComplete,
 		linksProjects,
-		spanModuleTitle,
-		btnSubmitUpdatedTask,
-		btnNewTask,
+		btnsDeleteProject,
+		// Links for Project Filters
+		allTasksFilter,
+		inboxFilter,
+		todayFilter,
+		weekFilter,
+		// Project Form and Project Elements
 		formProject,
 		listProjects,
 		listItemsProjects,
 		projectNameInput,
 		btnAddProject,
-		btnsDeleteProject,
+
+		// Add Task Form and related elements
 		addTaskIcon,
-		btnCloseModule,
 		formModule,
+		btnCloseModule,
+		spanModuleTitle,
 		formTask,
 		titleInput,
 		descriptionInput,
@@ -66,8 +68,12 @@ const cacheDom = (() => {
 		dueDateInput,
 		taskCompletedInput,
 		taskProjectSelect,
+		btnSubmitUpdatedTask,
+		btnNewTask,
 		btnSubmitTask,
 		btnReset,
+		// Task Output
+		taskCollection,
 	};
 })();
 

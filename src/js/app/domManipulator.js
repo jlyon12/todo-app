@@ -1,7 +1,6 @@
 import format from 'date-fns/format';
 import cacheDom from './cacheDom';
-import projectModule from '../components/project';
-import taskModule from '../components/task';
+import { projectController, taskController } from './appController';
 import DeleteIcon from '../../assets/images/delete-icon.svg';
 import DeleteIconHover from '../../assets/images/delete-icon-hover.svg';
 
@@ -30,7 +29,7 @@ const renderProjectSelectOptions = () => {
 	defaultOption.textContent = 'Send to Inbox';
 	taskProjectSelect.textContent = '';
 	taskProjectSelect.appendChild(defaultOption);
-	projectModule.allProjects.forEach((project) => {
+	projectController.allProjects.forEach((project) => {
 		if (project.name !== 'Inbox') {
 			createProjectSelectOption(project);
 		}
@@ -74,7 +73,7 @@ const createProjectWrapper = (project) => {
 const renderProjectList = () => {
 	const projectList = cacheDom.listProjects;
 	projectList.textContent = '';
-	projectModule.allProjects.forEach((project) => {
+	projectController.allProjects.forEach((project) => {
 		createProjectWrapper(project);
 	});
 };
@@ -113,7 +112,7 @@ const updateFormToAddNewTaskMode = () => {
 };
 
 const updateFormValuesWithCurrentTask = (projectName, taskTitle) => {
-	const thisTask = taskModule.returnThisTask(projectName, taskTitle);
+	const thisTask = taskController.returnThisTask(projectName, taskTitle);
 	cacheDom.titleInput.value = thisTask.title;
 	cacheDom.descriptionInput.value = thisTask.description;
 	cacheDom.priorityInput.value = thisTask.priority;
@@ -205,7 +204,7 @@ const createTaskWrapper = (task) => {
 const renderAllTasks = () => {
 	const { taskCollection } = cacheDom;
 	taskCollection.textContent = '';
-	taskModule.getAllTasks().forEach((task) => {
+	taskController.getAllTasks().forEach((task) => {
 		createTaskWrapper(task);
 	});
 };
@@ -213,7 +212,7 @@ const renderAllTasks = () => {
 const renderInboxTasks = () => {
 	const { taskCollection } = cacheDom;
 	taskCollection.textContent = '';
-	projectModule
+	projectController
 		.getProjectTasks('Inbox')
 		.forEach((task) => createTaskWrapper(task));
 };
@@ -221,32 +220,32 @@ const renderInboxTasks = () => {
 const renderProjectTasks = (projectName) => {
 	const { taskCollection } = cacheDom;
 	taskCollection.textContent = '';
-	projectModule
+	projectController
 		.getProjectTasks(projectName)
 		.forEach((task) => createTaskWrapper(task));
 };
 const renderTodayTasks = () => {
 	const { taskCollection } = cacheDom;
 	taskCollection.textContent = '';
-	taskModule.getTodaysTasks().forEach((task) => createTaskWrapper(task));
+	taskController.getTodaysTasks().forEach((task) => createTaskWrapper(task));
 };
 
 const renderWeekTasks = () => {
 	const { taskCollection } = cacheDom;
 	taskCollection.textContent = '';
-	taskModule.getWeekTasks().forEach((task) => createTaskWrapper(task));
+	taskController.getWeekTasks().forEach((task) => createTaskWrapper(task));
 };
 export {
-	renderProjectList,
-	renderInboxTasks,
 	hideTaskForm,
 	showTaskForm,
-	renderProjectSelectOptions,
-	renderAllTasks,
 	getTaskFormValues,
 	updateFormValuesWithCurrentTask,
 	updateFormToEditTaskMode,
 	updateFormToAddNewTaskMode,
+	renderProjectSelectOptions,
+	renderProjectList,
+	renderAllTasks,
+	renderInboxTasks,
 	renderProjectTasks,
 	renderTodayTasks,
 	renderWeekTasks,
