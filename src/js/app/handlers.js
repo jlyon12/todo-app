@@ -130,7 +130,7 @@ formTask.addEventListener('submit', (e) => {
 			associatedProject
 		);
 	} else if (!btnSubmitUpdatedTask.classList.contains('hidden')) {
-		const { taskTitle, projectName } = formProject.dataset;
+		const { taskTitle, projectName } = formTask.dataset;
 		taskController.editTask(
 			projectName,
 			taskTitle,
@@ -154,8 +154,8 @@ const editTaskClick = (e) => {
 	const { taskTitle, projectName } = e.target.parentNode.parentNode.dataset;
 	updateFormValuesWithCurrentTask(projectName, taskTitle);
 	showTaskForm();
-	formProject.dataset.projectName = projectName;
-	formProject.dataset.taskTitle = taskTitle;
+	formTask.dataset.projectName = projectName;
+	formTask.dataset.taskTitle = taskTitle;
 };
 
 const deleteTaskClick = (e) => {
