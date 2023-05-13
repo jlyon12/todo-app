@@ -8,6 +8,8 @@ import {
 	updateFormValuesWithCurrentTask,
 	updateFormToEditTaskMode,
 	updateFormToAddNewTaskMode,
+	updateFormToEditProjectMode,
+	updateFormToAddProjectMode,
 	renderProjectSelectOptions,
 	renderProjectList,
 	renderAllTasks,
@@ -24,6 +26,7 @@ const {
 	btnsMarkComplete,
 	linksProjects,
 	btnsDeleteProject,
+	btnsEditProject,
 	// Links for Project Filters
 	allTasksFilter,
 	inboxFilter,
@@ -32,6 +35,8 @@ const {
 	// Project Form and Project Elements
 	formProject,
 	projectNameInput,
+	btnAddProject,
+	btnEditProjectSubmit,
 	// Add Task Form and related elements
 	btnCloseModule,
 	formTask,
@@ -43,6 +48,10 @@ const addClickListenersToRenderedNodes = () => {
 	btnsDeleteProject().forEach((btn) =>
 		btn.addEventListener('click', deleteProjectClick)
 	);
+
+	btnsEditProject().forEach((btn) => {
+		btn.addEventListener('click', editProjectClick);
+	});
 
 	btnsDeleteTasks().forEach((btn) =>
 		btn.addEventListener('click', deleteTaskClick)
@@ -83,13 +92,20 @@ const projectLinkClick = (e) => {
 	renderProjectTasks(projectName);
 };
 
-// Handle Project Creation and Deletion
+// Handle Project Creation and Deletion and Editing
 
 formProject.addEventListener('submit', (e) => {
 	e.preventDefault();
-	projectController.createProject(projectNameInput.value);
+	if (!btnAddProject.classList.contains('hidden')) {
+		projectController.createProject(projectNameInput.value);
+	} else if (!btnEditProjectSubmit.classList.contains('hidden')) {
+		const { projectName } = formProject.dataset;
+		projectController.editProjectName(projectName, projectNameInput.value);
+		updateFormToAddProjectMode();
+	}
 	renderProjectList();
 	renderProjectSelectOptions();
+	renderAllTasks();
 	formProject.reset();
 	addClickListenersToRenderedNodes();
 });
@@ -100,6 +116,13 @@ const deleteProjectClick = (e) => {
 	projectController.deleteProject(projectName);
 	renderProjectList();
 	addClickListenersToRenderedNodes();
+};
+
+const editProjectClick = (e) => {
+	const { projectName } = e.target.closest('button').parentNode.dataset;
+	projectNameInput.value = projectName;
+	updateFormToEditProjectMode();
+	formProject.dataset.projectName = projectName;
 };
 
 // Handle Task Creation and Deletion

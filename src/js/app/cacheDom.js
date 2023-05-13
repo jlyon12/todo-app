@@ -20,8 +20,10 @@ const cacheDom = (() => {
 	const formProject = document.getElementById('formProject');
 	const projectNameInput = document.getElementById('projectName');
 	const btnAddProject = document.getElementById('btnAddProject');
+	const btnEditProjectSubmit = document.getElementById('btnEditProjectSubmit');
 	const btnsDeleteProject = () =>
 		document.querySelectorAll('.btnDeleteProject');
+	const btnsEditProject = () => document.querySelectorAll('.btnEditProject');
 
 	// Form Element and Form Inputs
 	const btnCloseModule = document.getElementById('btnCloseModule');
@@ -44,6 +46,7 @@ const cacheDom = (() => {
 		btnsMarkComplete,
 		linksProjects,
 		btnsDeleteProject,
+		btnsEditProject,
 		// Links for Project Filters
 		allTasksFilter,
 		inboxFilter,
@@ -55,6 +58,7 @@ const cacheDom = (() => {
 		listItemsProjects,
 		projectNameInput,
 		btnAddProject,
+		btnEditProjectSubmit,
 
 		// Add Task Form and related elements
 		addTaskIcon,

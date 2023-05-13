@@ -190,11 +190,15 @@ body {
 	}
 	button {
 		background-color: transparent;
-		border: transparent;
+		border: 1px solid yellow;
+		padding: 0;
 	}
 	img {
 		height: 1.5rem;
 	}
+	// .btnEditProject {
+	// 	margin-left: auto;
+	// }
 }
 
 .module-form {

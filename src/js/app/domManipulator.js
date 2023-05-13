@@ -3,6 +3,8 @@ import cacheDom from './cacheDom';
 import { projectController, taskController } from './appController';
 import DeleteIcon from '../../assets/images/delete-icon.svg';
 import DeleteIconHover from '../../assets/images/delete-icon-hover.svg';
+import EditIcon from '../../assets/images/edit-icon.svg';
+import EditIconHover from '../../assets/images/edit-icon-hover.svg';
 
 const hideTaskForm = () => {
 	const { formModule } = cacheDom;
@@ -44,25 +46,40 @@ const createProjectWrapper = (project) => {
 	projectLink.setAttribute('href', `#${project.name}`);
 	projectLink.dataset.projectName = project.name;
 	projectLink.textContent = project.name;
+	const btnEditProject = document.createElement('button');
+	btnEditProject.setAttribute('class', `btnEditProject`);
+	const editIcon = new Image();
+	editIcon.src = EditIcon;
+
+	const disableHoverEffectEditIcon = () => {
+		editIcon.src = EditIcon;
+	};
+	const enableHoverEffectEditIcon = () => {
+		editIcon.src = EditIconHover;
+	};
+	btnEditProject.addEventListener('mouseover', enableHoverEffectEditIcon);
+	btnEditProject.addEventListener('mouseleave', disableHoverEffectEditIcon);
+	btnEditProject.appendChild(editIcon);
 	const btnDeleteProject = document.createElement('button');
 	btnDeleteProject.setAttribute('class', `btnDeleteProject`);
 	const deleteIcon = new Image();
 	deleteIcon.src = DeleteIcon;
 
-	const disableHoverEffect = () => {
+	const disableHoverEffectDeleteIcon = () => {
 		deleteIcon.src = DeleteIcon;
 	};
-	const enableHoverEffect = () => {
+	const enableHoverEffectDeleteIcon = () => {
 		deleteIcon.src = DeleteIconHover;
 	};
-	deleteIcon.addEventListener('mouseover', enableHoverEffect);
-	deleteIcon.addEventListener('mouseleave', disableHoverEffect);
+	deleteIcon.addEventListener('mouseover', enableHoverEffectDeleteIcon);
+	deleteIcon.addEventListener('mouseleave', disableHoverEffectDeleteIcon);
 	btnDeleteProject.appendChild(deleteIcon);
 
 	const formatID = project.name.replace(/ /g, '-');
 	projectListItem.setAttribute('id', `${formatID}`);
-
+	projectListItem.dataset.projectName = project.name;
 	projectListItem.appendChild(projectLink);
+	projectListItem.appendChild(btnEditProject);
 	projectListItem.appendChild(btnDeleteProject);
 	projectList.appendChild(projectListItem);
 	if (project.name === 'Inbox') {
@@ -78,6 +95,17 @@ const renderProjectList = () => {
 	});
 };
 
+const updateFormToEditProjectMode = () => {
+	const { btnEditProjectSubmit, btnAddProject } = cacheDom;
+	btnAddProject.classList.add('hidden');
+	btnEditProjectSubmit.classList.remove('hidden');
+};
+
+const updateFormToAddProjectMode = () => {
+	const { btnEditProjectSubmit, btnAddProject } = cacheDom;
+	btnAddProject.classList.remove('hidden');
+	btnEditProjectSubmit.classList.add('hidden');
+};
 // Create DOM elements related to Tasks
 const getTaskFormValues = () => {
 	const title = cacheDom.titleInput.value;
@@ -242,6 +270,8 @@ export {
 	updateFormValuesWithCurrentTask,
 	updateFormToEditTaskMode,
 	updateFormToAddNewTaskMode,
+	updateFormToEditProjectMode,
+	updateFormToAddProjectMode,
 	renderProjectSelectOptions,
 	renderProjectList,
 	renderAllTasks,

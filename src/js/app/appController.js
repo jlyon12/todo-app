@@ -22,9 +22,10 @@ const projectController = (() => {
 		allProjects.splice(index, 1);
 	};
 
-	const editProject = (project, newName) => {
-		project.name = newName;
-		return project;
+	const editProjectName = (projectName, newName) => {
+		const index = getProjectIndex(projectName);
+		allProjects[index].name = newName;
+		console.log(allProjects);
 	};
 
 	const getProjectTasks = (projectName) => {
@@ -35,12 +36,11 @@ const projectController = (() => {
 
 	createProject('Inbox');
 
-	getProjectTasks('Inbox');
 	return {
 		allProjects,
 		createProject,
 		deleteProject,
-		editProject,
+		editProjectName,
 		getProjectIndex,
 		getProjectTasks,
 	};
@@ -87,20 +87,17 @@ const taskController = (() => {
 		return { projectTasks, taskIndex };
 	};
 	const returnThisTask = (projectName, taskTitle) => {
-		const { taskIndex } = getTaskIndex(projectName, taskTitle);
-		const { projectTasks } = getTaskIndex(projectName, taskTitle);
+		const { taskIndex, projectTasks } = getTaskIndex(projectName, taskTitle);
 		return projectTasks.at(taskIndex);
 	};
 
 	const deleteTask = (projectName, taskTitle) => {
-		const { taskIndex } = getTaskIndex(projectName, taskTitle);
-		const { projectTasks } = getTaskIndex(projectName, taskTitle);
+		const { taskIndex, projectTasks } = getTaskIndex(projectName, taskTitle);
 		return projectTasks.splice(taskIndex, 1);
 	};
 
 	const markTaskCompleted = (projectName, taskTitle) => {
-		const { taskIndex } = getTaskIndex(projectName, taskTitle);
-		const { projectTasks } = getTaskIndex(projectName, taskTitle);
+		const { taskIndex, projectTasks } = getTaskIndex(projectName, taskTitle);
 		if (projectTasks.at(taskIndex).isCompleted === false) {
 			projectTasks.at(taskIndex).isCompleted = true;
 		} else projectTasks.at(taskIndex).isCompleted = false;
