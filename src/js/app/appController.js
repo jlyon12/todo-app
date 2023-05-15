@@ -25,7 +25,9 @@ const projectController = (() => {
 	const editProjectName = (projectName, newName) => {
 		const index = getProjectIndex(projectName);
 		allProjects[index].name = newName;
-		console.log(allProjects);
+		allProjects[index].tasks.forEach(
+			(task) => (task.associatedProject = newName)
+		);
 	};
 
 	const getProjectTasks = (projectName) => {
