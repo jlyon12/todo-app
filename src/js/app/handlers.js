@@ -130,6 +130,7 @@ const deleteProjectClick = (e) => {
 	const { projectName } = e.target.closest('li').dataset;
 	projectController.deleteProject(projectName);
 	saveAllProjects();
+	saveAllTasks();
 	renderProjectList();
 	addClickListenersToRenderedNodes();
 };
@@ -225,7 +226,9 @@ window.addEventListener('load', () => {
 	}
 	if (localStorage.getItem('savedTasks') !== null) {
 		loadAllTasks();
-		renderAllTasks();
 		addClickListenersToRenderedNodes();
 	}
+	updateTaskContainerTitle('Inbox');
+	renderInboxTasks();
+	addClickListenersToRenderedNodes();
 });
