@@ -188,6 +188,7 @@ const editTaskClick = (e) => {
 	const { taskTitle, projectName } = e.target.parentNode.parentNode.dataset;
 	updateFormValuesWithCurrentTask(projectName, taskTitle);
 	showTaskForm();
+	btnCloseModule.addEventListener('click', hideTaskForm);
 	formTask.dataset.projectName = projectName;
 	formTask.dataset.taskTitle = taskTitle;
 };
