@@ -19,7 +19,12 @@ import {
 	renderWeekTasks,
 } from './domManipulator';
 
-import { loadAllProjects, saveAllProjects } from './storage';
+import {
+	loadAllProjects,
+	saveAllProjects,
+	saveAllTasks,
+	loadAllTasks,
+} from './storage';
 
 const {
 	// Functions for updating nodeLists
@@ -172,6 +177,7 @@ formTask.addEventListener('submit', (e) => {
 		updateFormToAddNewTaskMode();
 	}
 	cacheDom.formTask.reset();
+	saveAllTasks();
 	hideTaskForm();
 	renderAllTasks();
 	addClickListenersToRenderedNodes();
@@ -189,6 +195,7 @@ const editTaskClick = (e) => {
 const deleteTaskClick = (e) => {
 	const { taskTitle, projectName } = e.target.parentNode.parentNode.dataset;
 	taskController.deleteTask(projectName, taskTitle);
+	saveAllTasks();
 	renderAllTasks();
 	addClickListenersToRenderedNodes();
 };
@@ -196,6 +203,7 @@ const deleteTaskClick = (e) => {
 const markTaskCompleteClick = (e) => {
 	const { taskTitle, projectName } = e.target.parentNode.parentNode.dataset;
 	taskController.markTaskCompleted(projectName, taskTitle);
+	saveAllTasks();
 	renderAllTasks();
 	addClickListenersToRenderedNodes();
 };
@@ -207,5 +215,9 @@ window.addEventListener('load', () => {
 		renderProjectSelectOptions();
 		addClickListenersToRenderedNodes();
 	}
-	console.log(projectController.allProjects);
+	if (localStorage.getItem('savedTasks') !== null) {
+		loadAllTasks();
+		renderAllTasks();
+		addClickListenersToRenderedNodes();
+	}
 });
