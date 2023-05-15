@@ -1,5 +1,6 @@
 const cacheDom = (() => {
 	// Task Elements
+	const taskCollectionTitle = document.getElementById('taskCollectionTitle');
 	const addTaskIcon = document.getElementById('addTaskIcon');
 	const btnNewTask = document.getElementById('btnNewTask');
 	const taskCollection = document.getElementById('taskCollection');
@@ -78,6 +79,7 @@ const cacheDom = (() => {
 		btnReset,
 		// Task Output
 		taskCollection,
+		taskCollectionTitle,
 	};
 })();
 

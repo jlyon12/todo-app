@@ -102,6 +102,12 @@ const updateFormToAddProjectMode = () => {
 	btnEditProjectSubmit.classList.add('hidden');
 };
 // Create DOM elements related to Tasks
+
+const updateTaskContainerTitle = (currentView) => {
+	const { taskCollectionTitle } = cacheDom;
+	taskCollectionTitle.textContent = currentView;
+};
+
 const getTaskFormValues = () => {
 	const title = cacheDom.titleInput.value;
 	const description = cacheDom.descriptionInput.value;
@@ -280,6 +286,7 @@ const renderWeekTasks = () => {
 export {
 	hideTaskForm,
 	showTaskForm,
+	updateTaskContainerTitle,
 	getTaskFormValues,
 	updateFormValuesWithCurrentTask,
 	updateFormToEditTaskMode,

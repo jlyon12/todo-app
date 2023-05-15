@@ -4,6 +4,7 @@ import cacheDom from './cacheDom';
 import {
 	hideTaskForm,
 	showTaskForm,
+	updateTaskContainerTitle,
 	getTaskFormValues,
 	updateFormValuesWithCurrentTask,
 	updateFormToEditTaskMode,
@@ -77,18 +78,22 @@ const addClickListenersToRenderedNodes = () => {
 
 // Handle Filtering Tasks
 allTasksFilter.addEventListener('click', () => {
+	updateTaskContainerTitle('All Tasks');
 	renderAllTasks();
 	addClickListenersToRenderedNodes();
 });
 inboxFilter.addEventListener('click', () => {
+	updateTaskContainerTitle('Inbox');
 	renderInboxTasks();
 	addClickListenersToRenderedNodes();
 });
 todayFilter.addEventListener('click', () => {
+	updateTaskContainerTitle('Today');
 	renderTodayTasks();
 	addClickListenersToRenderedNodes();
 });
 weekFilter.addEventListener('click', () => {
+	updateTaskContainerTitle('This Week');
 	renderWeekTasks();
 	addClickListenersToRenderedNodes();
 });
@@ -96,8 +101,10 @@ weekFilter.addEventListener('click', () => {
 // Handle Filtering per Project Basis
 const projectLinkClick = (e) => {
 	const { projectName } = e.target.closest('li').dataset;
+	updateTaskContainerTitle(projectName);
 	renderProjectTasks(projectName);
 	addClickListenersToRenderedNodes();
+	updateTaskContainerTitle(projectName);
 };
 
 // Handle Project Creation and Deletion and Editing
