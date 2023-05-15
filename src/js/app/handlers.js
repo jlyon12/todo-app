@@ -185,7 +185,7 @@ formTask.addEventListener('submit', (e) => {
 
 const editTaskClick = (e) => {
 	updateFormToEditTaskMode();
-	const { taskTitle, projectName } = e.target.parentNode.parentNode.dataset;
+	const { taskTitle, projectName } = e.target.closest('.task-wrapper').dataset;
 	updateFormValuesWithCurrentTask(projectName, taskTitle);
 	showTaskForm();
 	btnCloseModule.addEventListener('click', hideTaskForm);
@@ -194,7 +194,7 @@ const editTaskClick = (e) => {
 };
 
 const deleteTaskClick = (e) => {
-	const { taskTitle, projectName } = e.target.parentNode.parentNode.dataset;
+	const { taskTitle, projectName } = e.target.closest('.task-wrapper').dataset;
 	taskController.deleteTask(projectName, taskTitle);
 	saveAllTasks();
 	renderAllTasks();
@@ -202,7 +202,7 @@ const deleteTaskClick = (e) => {
 };
 
 const markTaskCompleteClick = (e) => {
-	const { taskTitle, projectName } = e.target.parentNode.parentNode.dataset;
+	const { taskTitle, projectName } = e.target.closest('.task-wrapper').dataset;
 	taskController.markTaskCompleted(projectName, taskTitle);
 	saveAllTasks();
 	renderAllTasks();

@@ -299,6 +299,17 @@ body {
 		p:not(span) {
 			color: $clr-accent-100;
 		}
+		button {
+			background-color: transparent;
+			border: transparent;
+			padding: 0;
+		}
+		img {
+			height: 1.5rem;
+		}
+		.btnEditTask {
+			margin-left: auto;
+		}
 	}
 	.button {
 		width: fit-content;

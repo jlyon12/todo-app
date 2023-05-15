@@ -49,7 +49,6 @@ const createProjectWrapper = (project) => {
 	btnEditProject.setAttribute('class', `btnEditProject`);
 	const editIcon = new Image();
 	editIcon.src = EditIcon;
-
 	const disableHoverEffectEditIcon = () => {
 		editIcon.src = EditIcon;
 	};
@@ -63,7 +62,6 @@ const createProjectWrapper = (project) => {
 	btnDeleteProject.setAttribute('class', `btnDeleteProject`);
 	const deleteIcon = new Image();
 	deleteIcon.src = DeleteIcon;
-
 	const disableHoverEffectDeleteIcon = () => {
 		deleteIcon.src = DeleteIcon;
 	};
@@ -73,9 +71,7 @@ const createProjectWrapper = (project) => {
 	deleteIcon.addEventListener('mouseover', enableHoverEffectDeleteIcon);
 	deleteIcon.addEventListener('mouseleave', disableHoverEffectDeleteIcon);
 	btnDeleteProject.appendChild(deleteIcon);
-
-	const formatID = project.name.replace(/ /g, '-');
-	projectListItem.setAttribute('id', `${formatID}`);
+	projectListItem.classList.add('project-wrapper');
 	projectListItem.dataset.projectName = project.name;
 	projectListItem.appendChild(projectLink);
 	projectListItem.appendChild(btnEditProject);
@@ -170,7 +166,6 @@ const createTaskWrapper = (task) => {
 	if (task.isCompleted === true) {
 		btnComplete.checked = true;
 	} else btnComplete.checked = false;
-
 	taskHeader.appendChild(title);
 	taskHeader.appendChild(dueDate);
 	taskHeader.appendChild(btnComplete);
@@ -201,14 +196,34 @@ const createTaskWrapper = (task) => {
 	}
 	priority.textContent = 'Priority: ';
 	priority.appendChild(prioritySpan);
-	const btnDelete = document.createElement('button');
-	btnDelete.classList.add('button');
-	btnDelete.classList.add('btnDeleteTask');
-	btnDelete.textContent = 'Delete Task';
-	const btnEdit = document.createElement('button');
-	btnEdit.classList.add('button');
-	btnEdit.classList.add('btnEditTask');
-	btnEdit.textContent = 'Edit Task';
+	const btnEditTask = document.createElement('button');
+	btnEditTask.setAttribute('class', `btnEditTask`);
+	const editIcon = new Image();
+	editIcon.src = EditIcon;
+
+	const disableHoverEffectEditIcon = () => {
+		editIcon.src = EditIcon;
+	};
+	const enableHoverEffectEditIcon = () => {
+		editIcon.src = EditIconHover;
+	};
+	btnEditTask.addEventListener('mouseover', enableHoverEffectEditIcon);
+	btnEditTask.addEventListener('mouseleave', disableHoverEffectEditIcon);
+	btnEditTask.appendChild(editIcon);
+	const btnDeleteTask = document.createElement('button');
+	btnDeleteTask.setAttribute('class', `btnDeleteTask`);
+	const deleteIcon = new Image();
+	deleteIcon.src = DeleteIcon;
+
+	const disableHoverEffectDeleteIcon = () => {
+		deleteIcon.src = DeleteIcon;
+	};
+	const enableHoverEffectDeleteIcon = () => {
+		deleteIcon.src = DeleteIconHover;
+	};
+	deleteIcon.addEventListener('mouseover', enableHoverEffectDeleteIcon);
+	deleteIcon.addEventListener('mouseleave', disableHoverEffectDeleteIcon);
+	btnDeleteTask.appendChild(deleteIcon);
 	taskWrapper.dataset.projectName = task.associatedProject;
 	taskWrapper.dataset.taskTitle = task.title;
 	title.addEventListener('click', () => {
@@ -217,8 +232,8 @@ const createTaskWrapper = (task) => {
 	});
 	taskFooter.appendChild(project);
 	taskFooter.appendChild(priority);
-	taskFooter.appendChild(btnDelete);
-	taskFooter.appendChild(btnEdit);
+	taskFooter.appendChild(btnEditTask);
+	taskFooter.appendChild(btnDeleteTask);
 	taskWrapper.appendChild(taskHeader);
 	// taskBody.classList.add('hidden');
 	taskWrapper.appendChild(taskBody);
