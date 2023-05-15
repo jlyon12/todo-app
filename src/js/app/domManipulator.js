@@ -44,7 +44,6 @@ const createProjectWrapper = (project) => {
 	const projectLink = document.createElement('a');
 	projectLink.classList.add('projectLink');
 	projectLink.setAttribute('href', `#${project.name}`);
-	projectLink.dataset.projectName = project.name;
 	projectLink.textContent = project.name;
 	const btnEditProject = document.createElement('button');
 	btnEditProject.setAttribute('class', `btnEditProject`);

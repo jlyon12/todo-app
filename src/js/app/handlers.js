@@ -19,6 +19,8 @@ import {
 	renderWeekTasks,
 } from './domManipulator';
 
+import { loadAllProjects, saveAllProjects } from './storage';
+
 const {
 	// Functions for updating nodeLists
 	btnsDeleteTasks,
@@ -72,6 +74,7 @@ const addClickListenersToRenderedNodes = () => {
 allTasksFilter.addEventListener('click', () => {
 	renderAllTasks();
 	addClickListenersToRenderedNodes();
+	console.log(projectController.allProjects);
 });
 inboxFilter.addEventListener('click', () => {
 	renderInboxTasks();
@@ -103,6 +106,7 @@ formProject.addEventListener('submit', (e) => {
 		projectController.editProjectName(projectName, projectNameInput.value);
 		updateFormToAddProjectMode();
 	}
+	saveAllProjects();
 	renderProjectList();
 	renderProjectSelectOptions();
 	renderAllTasks();
@@ -111,9 +115,9 @@ formProject.addEventListener('submit', (e) => {
 });
 
 const deleteProjectClick = (e) => {
-	const projectId = e.target.parentNode.id;
-	const projectName = projectId.replace(/-/g, ' ');
+	const { projectName } = e.target.closest('li').dataset;
 	projectController.deleteProject(projectName);
+	saveAllProjects();
 	renderProjectList();
 	addClickListenersToRenderedNodes();
 };
@@ -195,3 +199,13 @@ const markTaskCompleteClick = (e) => {
 	renderAllTasks();
 	addClickListenersToRenderedNodes();
 };
+
+window.addEventListener('load', () => {
+	if (localStorage.getItem('savedProjects') !== null) {
+		loadAllProjects();
+		renderProjectList();
+		renderProjectSelectOptions();
+		addClickListenersToRenderedNodes();
+	}
+	console.log(projectController.allProjects);
+});
