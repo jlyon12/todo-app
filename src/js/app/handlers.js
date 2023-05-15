@@ -79,7 +79,6 @@ const addClickListenersToRenderedNodes = () => {
 allTasksFilter.addEventListener('click', () => {
 	renderAllTasks();
 	addClickListenersToRenderedNodes();
-	console.log(projectController.allProjects);
 });
 inboxFilter.addEventListener('click', () => {
 	renderInboxTasks();
@@ -96,8 +95,9 @@ weekFilter.addEventListener('click', () => {
 
 // Handle Filtering per Project Basis
 const projectLinkClick = (e) => {
-	const { projectName } = e.target.dataset;
+	const { projectName } = e.target.closest('li').dataset;
 	renderProjectTasks(projectName);
+	addClickListenersToRenderedNodes();
 };
 
 // Handle Project Creation and Deletion and Editing
