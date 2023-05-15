@@ -123,6 +123,7 @@ const editProjectClick = (e) => {
 	projectNameInput.value = projectName;
 	updateFormToEditProjectMode();
 	formProject.dataset.projectName = projectName;
+	btnsDeleteProject().forEach((btn) => (btn.disabled = true));
 };
 
 // Handle Task Creation and Deletion
