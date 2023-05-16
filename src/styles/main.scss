@@ -130,14 +130,32 @@ body {
 .task-filters ul {
 	display: grid;
 	gap: 1rem;
+	place-items: center;
 	margin-bottom: 2rem;
-	a {
-		text-decoration: none;
-		color: $clr-light;
-	}
-	a:hover {
-		transform: scale(1.05);
-		font-weight: $fw-bold;
+	padding: 0;
+	.filter-wrapper {
+		width: 50%;
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+		list-style-type: none;
+		text-align: left;
+		svg {
+			height: 2rem;
+			width: 2rem;
+		}
+		a {
+			text-decoration: none;
+			color: $clr-light;
+		}
+		a:hover {
+			transform: scale(1.05);
+			font-weight: $fw-bold;
+		}
+		a:focus,
+		a:focus-visible {
+			color: #6cbd6a;
+		}
 	}
 }
 .project-form-wrapper {
@@ -187,6 +205,10 @@ body {
 	a:hover {
 		transform: scale(1.05);
 		font-weight: $fw-bold;
+	}
+	a:focus,
+	a:focus-visible {
+		color: #6cbd6a;
 	}
 	button {
 		background-color: transparent;
@@ -257,7 +279,7 @@ body {
 .tasks-container {
 	grid-area: tasks;
 	background-color: $clr-accent-200;
-	padding: 2rem;
+	padding: 1rem 2rem;
 }
 
 .task-wrapper {
