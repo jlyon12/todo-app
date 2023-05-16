@@ -241,9 +241,9 @@ const createTaskWrapper = (task) => {
 	taskFooter.appendChild(btnEditTask);
 	taskFooter.appendChild(btnDeleteTask);
 	taskWrapper.appendChild(taskHeader);
-	// taskBody.classList.add('hidden');
+	taskBody.classList.add('hidden');
 	taskWrapper.appendChild(taskBody);
-	// taskFooter.classList.add('hidden');
+	taskFooter.classList.add('hidden');
 
 	taskWrapper.appendChild(taskFooter);
 	taskCollection.appendChild(taskWrapper);

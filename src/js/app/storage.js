@@ -1,6 +1,13 @@
-import { projectController } from './appController';
-import { taskController } from './appController';
+import { projectController, taskController } from './appController';
 
+const checkForFirstTimeOpened = () => {
+	if (localStorage.getItem('firstLoad') === null) {
+		localStorage.setItem('firstLoad', true);
+		return true;
+	}
+	localStorage.setItem('firstLoad', false);
+	return false;
+};
 const saveAllProjects = () => {
 	localStorage.setItem(
 		'savedProjects',
@@ -40,4 +47,10 @@ const loadAllTasks = () => {
 	});
 };
 
-export { saveAllProjects, loadAllProjects, saveAllTasks, loadAllTasks };
+export {
+	saveAllProjects,
+	loadAllProjects,
+	saveAllTasks,
+	loadAllTasks,
+	checkForFirstTimeOpened,
+};

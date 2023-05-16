@@ -25,6 +25,7 @@ import {
 	saveAllProjects,
 	saveAllTasks,
 	loadAllTasks,
+	checkForFirstTimeOpened,
 } from './storage';
 
 const {
@@ -120,8 +121,9 @@ formProject.addEventListener('submit', (e) => {
 	}
 	saveAllProjects();
 	renderProjectList();
+	updateTaskContainerTitle(projectNameInput.value);
 	renderProjectSelectOptions();
-	renderAllTasks();
+	renderProjectTasks(projectNameInput.value);
 	formProject.reset();
 	addClickListenersToRenderedNodes();
 });
@@ -132,6 +134,9 @@ const deleteProjectClick = (e) => {
 	saveAllProjects();
 	saveAllTasks();
 	renderProjectList();
+	renderInboxTasks();
+	renderProjectSelectOptions();
+	updateTaskContainerTitle('Inbox');
 	addClickListenersToRenderedNodes();
 };
 
@@ -187,7 +192,8 @@ formTask.addEventListener('submit', (e) => {
 	cacheDom.formTask.reset();
 	saveAllTasks();
 	hideTaskForm();
-	renderAllTasks();
+	updateTaskContainerTitle(associatedProject);
+	renderProjectTasks(associatedProject);
 	addClickListenersToRenderedNodes();
 });
 
@@ -205,6 +211,7 @@ const deleteTaskClick = (e) => {
 	const { taskTitle, projectName } = e.target.closest('.task-wrapper').dataset;
 	taskController.deleteTask(projectName, taskTitle);
 	saveAllTasks();
+	saveAllProjects();
 	renderAllTasks();
 	addClickListenersToRenderedNodes();
 };
@@ -218,17 +225,25 @@ const markTaskCompleteClick = (e) => {
 };
 
 window.addEventListener('load', () => {
+	if (checkForFirstTimeOpened() === true) {
+		projectController.initializeDefaultProjects();
+		taskController.initializeDefaultTasks();
+		renderProjectList();
+		renderProjectTasks('Getting Started');
+		saveAllProjects(); // save
+		saveAllTasks(); // save
+		addClickListenersToRenderedNodes();
+		return;
+	}
 	if (localStorage.getItem('savedProjects') !== null) {
 		loadAllProjects();
 		renderProjectList();
 		renderProjectSelectOptions();
-		addClickListenersToRenderedNodes();
 	}
 	if (localStorage.getItem('savedTasks') !== null) {
 		loadAllTasks();
-		addClickListenersToRenderedNodes();
+		renderInboxTasks();
+		updateTaskContainerTitle('Inbox');
 	}
-	updateTaskContainerTitle('Inbox');
-	renderInboxTasks();
 	addClickListenersToRenderedNodes();
 });
