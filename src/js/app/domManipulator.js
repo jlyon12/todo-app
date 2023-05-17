@@ -281,6 +281,7 @@ const renderProjectTasks = (projectName) => {
 	projectController
 		.sortProjectCompletedTasks(projectName)
 		.forEach((task) => createTaskWrapper(task));
+	console.log(projectController.getProjectTasks(projectName));
 };
 const renderTodayTasks = () => {
 	const { taskCollection } = cacheDom;

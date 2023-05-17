@@ -297,7 +297,6 @@ body {
 	margin: 1.5rem;
 	border-radius: 10px;
 	word-wrap: break-word;
-	word-break: break-all;
 	.task-header,
 	.task-body,
 	.task-footer {
@@ -312,11 +311,13 @@ body {
 		h3 {
 			font-size: 18px;
 			cursor: pointer;
+			margin-right: 1rem;
 		}
 		p {
 			margin-left: auto;
 			margin-right: 2rem;
 			font-weight: $fw-light;
+			text-align: right;
 		}
 	}
 	.task-body p {
