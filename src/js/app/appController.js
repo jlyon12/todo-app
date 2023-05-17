@@ -225,7 +225,7 @@ const taskController = (() => {
 			'(Click Me To Begin)',
 			"Click on the title of a task to open the task details pane. \n To mark as complete, click the checkbox to the right of this task's title.",
 			'Low',
-			format(add(new Date(), { days: 24 }), 'yyyy-MM-dd'),
+			format(add(new Date(), { hours: 24 }), 'yyyy-MM-dd'),
 			false,
 			'Getting Started'
 		);

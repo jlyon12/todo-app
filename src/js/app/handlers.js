@@ -220,7 +220,10 @@ const deleteTaskClick = (e) => {
 	taskController.deleteTask(projectName, taskTitle);
 	saveAllTasks();
 	saveAllProjects();
-	renderAllTasks();
+	renderProjectTasks(projectName);
+	if (cacheDom.taskCollectionTitle.textContent === 'Completed Tasks') {
+		renderCompletedTasks();
+	}
 	addClickListenersToRenderedNodes();
 };
 
