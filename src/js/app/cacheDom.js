@@ -13,6 +13,7 @@ const cacheDom = (() => {
 	const inboxFilter = document.getElementById('inboxFilter');
 	const todayFilter = document.getElementById('todayFilter');
 	const weekFilter = document.getElementById('weekFilter');
+	const completedFilter = document.getElementById('completedFilter');
 
 	// Project List and New Project Form elements
 	const listProjects = document.getElementById('listProjects');
@@ -53,6 +54,7 @@ const cacheDom = (() => {
 		inboxFilter,
 		todayFilter,
 		weekFilter,
+		completedFilter,
 		// Project Form and Project Elements
 		formProject,
 		listProjects,

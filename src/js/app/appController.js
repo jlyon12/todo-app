@@ -35,6 +35,31 @@ const projectController = (() => {
 		const thisProject = allProjects[index];
 		return thisProject.tasks;
 	};
+	const sortProjectTasksByCreationTime = (projectName) => {
+		const sortedTasks = getProjectTasks(projectName).sort((a, b) => {
+			if (a.createdTime > b.createdTime) {
+				return 1;
+			}
+			if (a.createdTime < b.createdTime) {
+				return -1;
+			}
+		});
+		return sortedTasks;
+	};
+
+	const sortProjectCompletedTasks = (projectName) => {
+		const sortedProject = sortProjectTasksByCreationTime(projectName).sort(
+			(a, b) => {
+				if (a.isCompleted > b.isCompleted) {
+					return 1;
+				}
+				if (a.isCompleted < b.isCompleted) {
+					return -1;
+				}
+			}
+		);
+		return sortedProject;
+	};
 
 	createProject('Inbox');
 	const initializeDefaultProjects = () => {
@@ -47,6 +72,8 @@ const projectController = (() => {
 		editProjectName,
 		getProjectIndex,
 		getProjectTasks,
+		sortProjectCompletedTasks,
+		sortProjectTasksByCreationTime,
 		initializeDefaultProjects,
 	};
 })();
@@ -138,9 +165,34 @@ const taskController = (() => {
 		projectTasks.at(taskIndex).associatedProject = newAssociatedProject;
 		moveTaskToProject(taskTitle, projectName, newAssociatedProject);
 	};
+
+	const sortTasksByCreationTime = () => {
+		const sortedTasks = getAllTasks().sort((a, b) => {
+			if (a.createdTime > b.createdTime) {
+				return 1;
+			}
+			if (a.createdTime < b.createdTime) {
+				return -1;
+			}
+		});
+		return sortedTasks;
+	};
+
+	const sortCompletedTasks = () => {
+		const sortedTasks = sortTasksByCreationTime().sort((a, b) => {
+			if (a.isCompleted > b.isCompleted) {
+				return 1;
+			}
+			if (a.isCompleted < b.isCompleted) {
+				return -1;
+			}
+		});
+		return sortedTasks;
+	};
+
 	const getTodaysTasks = () => {
 		const dateFormatted = format(new Date(), 'yyyy-MM-dd');
-		const todayCollection = Object.values(getAllTasks()).filter(
+		const todayCollection = Object.values(sortCompletedTasks()).filter(
 			(task) => task.dueDate === dateFormatted
 		);
 		return todayCollection;
@@ -155,12 +207,18 @@ const taskController = (() => {
 			endOfWeek(new Date(), { weekStartsOn: 1 }),
 			'yyyy-MM-dd'
 		);
-		const weekCollection = Object.values(getAllTasks()).filter(
+		const weekCollection = Object.values(sortCompletedTasks()).filter(
 			(task) => task.dueDate >= weekStart && task.dueDate <= weekEnd
 		);
-
 		return weekCollection;
 	};
+	const getCompletedTasks = () => {
+		const completedCollection = Object.values(sortCompletedTasks()).filter(
+			(task) => task.isCompleted === true
+		);
+		return completedCollection;
+	};
+
 	const initializeDefaultTasks = () => {
 		createTask(
 			'(Click Me To Begin)',
@@ -230,6 +288,8 @@ const taskController = (() => {
 	return {
 		allTasks,
 		getAllTasks,
+		sortCompletedTasks,
+		sortTasksByCreationTime,
 		createTask,
 		getTaskIndex,
 		deleteTask,
@@ -238,6 +298,7 @@ const taskController = (() => {
 		returnThisTask,
 		getTodaysTasks,
 		getWeekTasks,
+		getCompletedTasks,
 		initializeDefaultTasks,
 	};
 })();

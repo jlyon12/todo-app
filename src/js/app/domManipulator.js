@@ -202,6 +202,11 @@ const createTaskWrapper = (task) => {
 	}
 	priority.textContent = 'Priority: ';
 	priority.appendChild(prioritySpan);
+	const createdOn = document.createElement('p');
+	const createdOnSpan = document.createElement('span');
+	createdOnSpan.textContent = format(task.createdTime, 'PPP');
+	createdOn.textContent = 'Created: ';
+	createdOn.appendChild(createdOnSpan);
 	const btnEditTask = document.createElement('button');
 	btnEditTask.setAttribute('class', `btnEditTask`);
 	const editIcon = new Image();
@@ -227,17 +232,22 @@ const createTaskWrapper = (task) => {
 	const enableHoverEffectDeleteIcon = () => {
 		deleteIcon.src = DeleteIconHover;
 	};
+
 	deleteIcon.addEventListener('mouseover', enableHoverEffectDeleteIcon);
 	deleteIcon.addEventListener('mouseleave', disableHoverEffectDeleteIcon);
 	btnDeleteTask.appendChild(deleteIcon);
 	taskWrapper.dataset.projectName = task.associatedProject;
 	taskWrapper.dataset.taskTitle = task.title;
+	if (task.isCompleted === true) {
+		taskWrapper.classList.add('strike');
+	}
 	title.addEventListener('click', () => {
 		taskBody.classList.toggle('hidden');
 		taskFooter.classList.toggle('hidden');
 	});
 	taskFooter.appendChild(project);
 	taskFooter.appendChild(priority);
+	taskFooter.appendChild(createdOn);
 	taskFooter.appendChild(btnEditTask);
 	taskFooter.appendChild(btnDeleteTask);
 	taskWrapper.appendChild(taskHeader);
@@ -252,7 +262,7 @@ const createTaskWrapper = (task) => {
 const renderAllTasks = () => {
 	const { taskCollection } = cacheDom;
 	taskCollection.textContent = '';
-	taskController.getAllTasks().forEach((task) => {
+	taskController.sortCompletedTasks().forEach((task) => {
 		createTaskWrapper(task);
 	});
 };
@@ -261,7 +271,7 @@ const renderInboxTasks = () => {
 	const { taskCollection } = cacheDom;
 	taskCollection.textContent = '';
 	projectController
-		.getProjectTasks('Inbox')
+		.sortProjectTasksByCreationTime('Inbox')
 		.forEach((task) => createTaskWrapper(task));
 };
 
@@ -269,7 +279,7 @@ const renderProjectTasks = (projectName) => {
 	const { taskCollection } = cacheDom;
 	taskCollection.textContent = '';
 	projectController
-		.getProjectTasks(projectName)
+		.sortProjectCompletedTasks(projectName)
 		.forEach((task) => createTaskWrapper(task));
 };
 const renderTodayTasks = () => {
@@ -282,6 +292,12 @@ const renderWeekTasks = () => {
 	const { taskCollection } = cacheDom;
 	taskCollection.textContent = '';
 	taskController.getWeekTasks().forEach((task) => createTaskWrapper(task));
+};
+
+const renderCompletedTasks = () => {
+	const { taskCollection } = cacheDom;
+	taskCollection.textContent = '';
+	taskController.getCompletedTasks().forEach((task) => createTaskWrapper(task));
 };
 export {
 	hideTaskForm,
@@ -300,4 +316,5 @@ export {
 	renderProjectTasks,
 	renderTodayTasks,
 	renderWeekTasks,
+	renderCompletedTasks,
 };

@@ -18,6 +18,7 @@ import {
 	renderProjectTasks,
 	renderTodayTasks,
 	renderWeekTasks,
+	renderCompletedTasks,
 } from './domManipulator';
 
 import {
@@ -41,6 +42,7 @@ const {
 	inboxFilter,
 	todayFilter,
 	weekFilter,
+	completedFilter,
 	// Project Form and Project Elements
 	formProject,
 	projectNameInput,
@@ -96,6 +98,12 @@ todayFilter.addEventListener('click', () => {
 weekFilter.addEventListener('click', () => {
 	updateTaskContainerTitle('This Week');
 	renderWeekTasks();
+	addClickListenersToRenderedNodes();
+});
+
+completedFilter.addEventListener('click', () => {
+	updateTaskContainerTitle('Completed Tasks');
+	renderCompletedTasks();
 	addClickListenersToRenderedNodes();
 });
 
@@ -220,7 +228,10 @@ const markTaskCompleteClick = (e) => {
 	const { taskTitle, projectName } = e.target.closest('.task-wrapper').dataset;
 	taskController.markTaskCompleted(projectName, taskTitle);
 	saveAllTasks();
-	renderAllTasks();
+	renderProjectTasks(projectName);
+	if (cacheDom.taskCollectionTitle.textContent === 'Completed Tasks') {
+		renderCompletedTasks();
+	}
 	addClickListenersToRenderedNodes();
 };
 

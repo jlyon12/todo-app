@@ -76,6 +76,9 @@ body {
 	padding: 0;
 	border-color: transparent;
 }
+.button {
+	cursor: pointer;
+}
 
 .page-wrapper {
 	min-height: 100vh;
@@ -217,6 +220,7 @@ body {
 	}
 	img {
 		height: 1.5rem;
+		cursor: pointer;
 	}
 	.btnEditProject {
 		margin-left: auto;
@@ -224,6 +228,8 @@ body {
 }
 
 .module-form {
+	position: relative;
+	z-index: 1;
 	grid-area: tasks;
 	width: fit-content;
 	place-self: center;
@@ -251,6 +257,7 @@ body {
 	svg {
 		height: 3rem;
 		color: #ea466e;
+		cursor: pointer;
 	}
 	svg:hover {
 		transform: scale(1.05);
@@ -304,6 +311,7 @@ body {
 		align-items: center;
 		h3 {
 			font-size: 18px;
+			cursor: pointer;
 		}
 		p {
 			margin-left: auto;
@@ -316,7 +324,7 @@ body {
 	}
 	.task-footer {
 		display: grid;
-		grid-template-columns: auto auto max-content max-content;
+		grid-template-columns: repeat(3, auto) max-content max-content;
 		gap: 2rem;
 		p:not(span) {
 			color: $clr-accent-100;
@@ -328,6 +336,7 @@ body {
 		}
 		img {
 			height: 1.5rem;
+			cursor: pointer;
 		}
 		.btnEditTask {
 			margin-left: auto;
@@ -359,6 +368,23 @@ body {
 	.task-project-inbox {
 		color: cornflowerblue;
 	}
+}
+
+@keyframes strike {
+	from {
+		text-decoration-color: transparent;
+	}
+	to {
+		text-decoration-color: auto;
+	}
+}
+.strike {
+	opacity: 0.8;
+	position: relative;
+	z-index: 0;
+	color: #9f9f9f;
+	text-decoration: line-through;
+	animation: strike 0s linear;
 }
 
 .hidden {

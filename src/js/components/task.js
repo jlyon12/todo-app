@@ -14,6 +14,7 @@ export default class Task {
 		this._dueDate = dueDate;
 		this._isCompleted = isCompleted;
 		this._associatedProject = associatedProject;
+		this._createdTime = new Date();
 	}
 
 	get title() {
@@ -62,5 +63,9 @@ export default class Task {
 
 	set associatedProject(value) {
 		this._associatedProject = value;
+	}
+
+	get createdTime() {
+		return this._createdTime;
 	}
 }
