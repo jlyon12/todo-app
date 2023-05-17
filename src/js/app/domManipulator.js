@@ -1,5 +1,7 @@
 import format from 'date-fns/format';
-import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import formatDistanceToNowStrict from 'date-fns/formatDistanceToNowStrict';
+import isToday from 'date-fns/isToday';
+import isTomorrow from 'date-fns/isTomorrow';
 import cacheDom from './cacheDom';
 import { projectController, taskController } from './appController';
 import DeleteIcon from '../../assets/images/delete-icon.svg';
@@ -166,10 +168,23 @@ const createTaskWrapper = (task) => {
 		new Date(dateArray[0], dateArray[1] - 1, dateArray[2]),
 		'PPP'
 	);
-	dueDate.textContent = `due ${formatDistanceToNow(
-		new Date(dateArray[0], dateArray[1] - 1, dateArray[2]),
-		{ addSuffix: true }
-	)}`;
+	if (task.isCompleted === true) {
+		dueDate.textContent = `completed`;
+	} else if (
+		isToday(new Date(dateArray[0], dateArray[1] - 1, dateArray[2])) === true
+	) {
+		dueDate.textContent = `due today`;
+		dueDate.classList.add('due-today-task');
+	} else if (
+		isTomorrow(new Date(dateArray[0], dateArray[1] - 1, dateArray[2])) === true
+	) {
+		dueDate.textContent = `due tomorrow`;
+	} else {
+		dueDate.textContent = `due ${formatDistanceToNowStrict(
+			new Date(dateArray[0], dateArray[1] - 1, dateArray[2]),
+			{ addSuffix: true }
+		)}`;
+	}
 	if (dueDate.textContent.includes('ago')) {
 		dueDate.classList.add('overdue-task');
 	}

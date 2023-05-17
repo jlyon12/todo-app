@@ -244,6 +244,7 @@ window.addEventListener('load', () => {
 		taskController.initializeDefaultTasks();
 		renderProjectList();
 		renderProjectTasks('Getting Started');
+		updateTaskContainerTitle('Getting Started');
 		saveAllProjects(); // save
 		saveAllTasks(); // save
 		addClickListenersToRenderedNodes();

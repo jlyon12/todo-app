@@ -319,8 +319,13 @@ body {
 			font-weight: $fw-light;
 			text-align: right;
 		}
+		.due-today-task {
+			color: #6cbd6a;
+			font-weight: $fw-bold;
+		}
 		.overdue-task {
 			color: #ec7190;
+			font-weight: $fw-bold;
 		}
 	}
 	.task-body p {
