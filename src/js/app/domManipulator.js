@@ -1,4 +1,5 @@
 import format from 'date-fns/format';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import cacheDom from './cacheDom';
 import { projectController, taskController } from './appController';
 import DeleteIcon from '../../assets/images/delete-icon.svg';
@@ -165,7 +166,13 @@ const createTaskWrapper = (task) => {
 		new Date(dateArray[0], dateArray[1] - 1, dateArray[2]),
 		'PPP'
 	);
-	dueDate.textContent = formatDate;
+	dueDate.textContent = `due ${formatDistanceToNow(
+		new Date(dateArray[0], dateArray[1] - 1, dateArray[2]),
+		{ addSuffix: true }
+	)}`;
+	if (dueDate.textContent.includes('ago')) {
+		dueDate.classList.add('overdue-task');
+	}
 	const btnComplete = document.createElement('input');
 	btnComplete.type = 'checkbox';
 	btnComplete.classList.add('btnMarkComplete');
@@ -207,6 +214,11 @@ const createTaskWrapper = (task) => {
 	createdOnSpan.textContent = format(task.createdTime, 'PPP');
 	createdOn.textContent = 'Created: ';
 	createdOn.appendChild(createdOnSpan);
+	const dueOn = document.createElement('p');
+	const dueOnSpan = document.createElement('span');
+	dueOnSpan.textContent = formatDate;
+	dueOn.textContent = 'Due: ';
+	dueOn.appendChild(dueOnSpan);
 	const btnEditTask = document.createElement('button');
 	btnEditTask.setAttribute('class', `btnEditTask`);
 	const editIcon = new Image();
@@ -248,6 +260,7 @@ const createTaskWrapper = (task) => {
 	taskFooter.appendChild(project);
 	taskFooter.appendChild(priority);
 	taskFooter.appendChild(createdOn);
+	taskFooter.appendChild(dueOn);
 	taskFooter.appendChild(btnEditTask);
 	taskFooter.appendChild(btnDeleteTask);
 	taskWrapper.appendChild(taskHeader);

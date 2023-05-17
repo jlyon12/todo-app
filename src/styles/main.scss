@@ -319,13 +319,16 @@ body {
 			font-weight: $fw-light;
 			text-align: right;
 		}
+		.overdue-task {
+			color: #ec7190;
+		}
 	}
 	.task-body p {
 		font-weight: $fw-light;
 	}
 	.task-footer {
 		display: grid;
-		grid-template-columns: repeat(3, auto) max-content max-content;
+		grid-template-columns: repeat(4, auto) max-content max-content;
 		gap: 2rem;
 		p:not(span) {
 			color: $clr-accent-100;

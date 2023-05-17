@@ -1,4 +1,5 @@
 import format from 'date-fns/format';
+import add from 'date-fns/add';
 import startOfWeek from 'date-fns/startOfWeek';
 import endOfWeek from 'date-fns/endOfWeek';
 import Project from '../components/project';
@@ -224,7 +225,7 @@ const taskController = (() => {
 			'(Click Me To Begin)',
 			"Click on the title of a task to open the task details pane. \n To mark as complete, click the checkbox to the right of this task's title.",
 			'Low',
-			format(new Date(), 'yyyy-MM-dd'),
+			format(add(new Date(), { days: 24 }), 'yyyy-MM-dd'),
 			false,
 			'Getting Started'
 		);
@@ -232,7 +233,7 @@ const taskController = (() => {
 			'Creating Tasks',
 			"Create a new task by clicking the (+) icon near the top right of the screen. Tasks will automatically be added to the 'Inbox' project. Use this project as a temporary place quickly add new tasks before assigning them to another project.",
 			'Low',
-			format(new Date(), 'yyyy-MM-dd'),
+			format(add(new Date(), { hours: 24 }), 'yyyy-MM-dd'),
 			false,
 			'Getting Started'
 		);
@@ -240,7 +241,7 @@ const taskController = (() => {
 			'Creating Projects',
 			'Create a new project by using the form to the left and clicking the add project icon.',
 			'Low',
-			format(new Date(), 'yyyy-MM-dd'),
+			format(add(new Date(), { hours: 24 }), 'yyyy-MM-dd'),
 			false,
 			'Getting Started'
 		);
@@ -248,7 +249,7 @@ const taskController = (() => {
 			'Assigning A Task To A Project',
 			'Click the edit task icon inside of the task details pane to choose the project name from the project select dropdown. Click "Edit Task" to submit changes.',
 			'Low',
-			format(new Date(), 'yyyy-MM-dd'),
+			format(add(new Date(), { hours: 24 }), 'yyyy-MM-dd'),
 			false,
 			'Getting Started'
 		);
@@ -256,7 +257,7 @@ const taskController = (() => {
 			'Editing Tasks',
 			'Use the edit task icon to edit details about the task.',
 			'Low',
-			format(new Date(), 'yyyy-MM-dd'),
+			format(add(new Date(), { hours: 24 }), 'yyyy-MM-dd'),
 			false,
 			'Getting Started'
 		);
@@ -264,7 +265,7 @@ const taskController = (() => {
 			'Deleting Tasks',
 			'Click the delete task icon next to the edit task icon in the task details pane. This action can not be undone.',
 			'Low',
-			format(new Date(), 'yyyy-MM-dd'),
+			format(add(new Date(), { hours: 24 }), 'yyyy-MM-dd'),
 			false,
 			'Getting Started'
 		);
@@ -272,7 +273,7 @@ const taskController = (() => {
 			'Renaming Projects',
 			'Click the edit project icon to the right of the project name which you would like to edit. The above form will enter "edit" mode to allow the project name to be changed. All tasks within the project will be automatically updated to the new project name.',
 			'Low',
-			format(new Date(), 'yyyy-MM-dd'),
+			format(add(new Date(), { hours: 24 }), 'yyyy-MM-dd'),
 			false,
 			'Getting Started'
 		);
@@ -280,7 +281,7 @@ const taskController = (() => {
 			'Deleting Projects',
 			'Click the delete project icon to the right of the project name which you would like to delete. All tasks within the project will also be deleted. This can not be undone - please proceed with caution.',
 			'High',
-			format(new Date(), 'yyyy-MM-dd'),
+			format(add(new Date(), { hours: 24 }), 'yyyy-MM-dd'),
 			false,
 			'Getting Started'
 		);
