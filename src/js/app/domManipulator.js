@@ -18,6 +18,21 @@ const showTaskForm = () => {
 	const { formModule } = cacheDom;
 	formModule.classList.remove('hidden');
 };
+
+const toggleSidebar = () => {
+	const { projectSidebar, taskContainer } = cacheDom;
+	projectSidebar.classList.toggle('hidden');
+	const sidebarWidth = projectSidebar.clientWidth;
+
+	taskContainer.style.marginLeft = `${sidebarWidth}px`;
+};
+const hideSidebar = () => {
+	const { projectSidebar, taskContainer } = cacheDom;
+	projectSidebar.classList.add('hidden');
+
+	taskContainer.style.marginLeft = `0px`;
+};
+
 // Create DOM elements related to Projects
 const createProjectSelectOption = (project) => {
 	const { taskProjectSelect } = cacheDom;
@@ -341,6 +356,8 @@ const renderCompletedTasks = () => {
 	taskController.getCompletedTasks().forEach((task) => createTaskWrapper(task));
 };
 export {
+	toggleSidebar,
+	hideSidebar,
 	hideTaskForm,
 	showTaskForm,
 	updateTaskContainerTitle,

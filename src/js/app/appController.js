@@ -230,6 +230,14 @@ const taskController = (() => {
 			'Getting Started'
 		);
 		createTask(
+			'Opening The Project Pane',
+			'Click on the hamburger icon in the left of the header to open the project pane. The project pane is used to filter tasks and modify projects.',
+			'Low',
+			format(add(new Date(), { hours: 24 }), 'yyyy-MM-dd'),
+			false,
+			'Getting Started'
+		);
+		createTask(
 			'Creating Tasks',
 			"Create a new task by clicking the (+) icon near the top right of the screen. Tasks will automatically be added to the 'Inbox' project. Use this project as a temporary place quickly add new tasks before assigning them to another project.",
 			'Low',
@@ -239,7 +247,7 @@ const taskController = (() => {
 		);
 		createTask(
 			'Creating Projects',
-			'Create a new project by using the form to the left and clicking the add project icon.',
+			'Create a new project by using project pane and entering a new project name in the text input.',
 			'Low',
 			format(add(new Date(), { hours: 24 }), 'yyyy-MM-dd'),
 			false,

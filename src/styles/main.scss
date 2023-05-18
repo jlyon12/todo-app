@@ -65,11 +65,15 @@ $clr-dark: #1d1d1d;
 $clr-accent-100: #9f9f9f;
 $clr-accent-200: #363636;
 $clr-accent-300: #252525;
-
+html,
+body {
+	overflow-x: hidden;
+}
 body {
 	font-family: $ff-primary;
 	font-weight: $fw-regular;
 	color: $clr-light;
+	position: relative;
 }
 
 .fieldset {
@@ -84,22 +88,26 @@ body {
 	min-height: 100vh;
 	display: grid;
 	grid-template-areas: 'header' 'main';
-	grid-template-rows: min-content auto;
+	grid-template-rows: max-content auto;
 }
 
 .header {
+	position: sticky;
+	top: 0;
+	z-index: 3;
 	background-color: $clr-dark;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	padding: 0 1rem;
 	.button {
 		background-color: transparent;
 		border: transparent;
-		width: 3rem;
+		width: 50px;
 	}
 	svg {
 		color: $clr-light;
-		height: 3rem;
+		height: 50px;
 	}
 	svg:hover {
 		color: #6cbd6a;
@@ -111,21 +119,26 @@ body {
 		animation: transform 1s 2 ease-in-out;
 	}
 }
+
 .main-content {
 	position: relative;
 	display: grid;
 	grid-template-areas: 'projects tasks';
-	grid-template-columns: 1fr 3fr;
+	grid-template-columns: auto 1fr;
 	background-color: $clr-light;
 }
 
 .project-container {
 	grid-area: projects;
-	background-color: $clr-accent-300;
+	background-color: $clr-dark;
 	display: grid;
 	padding: 1rem;
 	grid-template-rows: repeat(3, min-content) 1fr;
 	gap: 1rem;
+
+	position: absolute;
+	height: 100%;
+	width: max-content;
 	button {
 		height: fit-content;
 	}
@@ -133,11 +146,10 @@ body {
 .task-filters ul {
 	display: grid;
 	gap: 1rem;
-	place-items: center;
 	margin-bottom: 2rem;
 	padding: 0;
 	.filter-wrapper {
-		width: 50%;
+		width: 100%;
 		display: flex;
 		align-items: center;
 		gap: 1.5rem;
@@ -163,13 +175,14 @@ body {
 }
 .project-form-wrapper {
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 	gap: 1rem;
 	input {
+		width: 100%;
 		border: transparent;
 		border-radius: 10px;
-		background-color: $clr-dark;
+		background-color: $clr-accent-300;
 		opacity: 0.8;
 		color: $clr-light;
 		padding: 0.5rem 1rem;
@@ -177,10 +190,10 @@ body {
 	button {
 		background-color: transparent;
 		border: transparent;
-		width: 3rem;
+		width: 32px;
 	}
 	svg {
-		height: 2rem;
+		height: 32px;
 		color: $clr-accent-100;
 	}
 	svg:hover {
@@ -191,11 +204,11 @@ body {
 .project-list {
 	list-style-type: none;
 	padding: 0;
-	margin-top: 2rem;
+	display: grid;
 	gap: 2rem;
+	align-content: start;
 	li {
-		margin-top: 1.5rem;
-		margin-inline: 3rem;
+		width: 100%;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -219,7 +232,7 @@ body {
 		padding: 0;
 	}
 	img {
-		height: 1.5rem;
+		height: 24px;
 		cursor: pointer;
 	}
 	.btnEditProject {
@@ -255,7 +268,7 @@ body {
 		font-size: 1.5rem;
 	}
 	svg {
-		height: 3rem;
+		height: 50px;
 		color: #ea466e;
 		cursor: pointer;
 	}
@@ -264,7 +277,7 @@ body {
 		color: #ec7190;
 	}
 	.btn-close {
-		width: 3rem;
+		width: 50px;
 
 		background-color: transparent;
 		border: transparent !important;
@@ -285,16 +298,21 @@ body {
 }
 .tasks-container {
 	grid-area: tasks;
+	display: grid;
+
 	background-color: $clr-accent-200;
-	padding: 1rem 2rem;
+	h2 {
+		margin: 2rem;
+	}
 }
 
 .task-wrapper {
+	width: 80%;
 	background-color: $clr-dark;
 	color: $clr-light;
 	display: grid;
-	padding: 1rem;
-	margin: 1.5rem;
+	padding: 0.5rem;
+	margin: 1.5rem auto;
 	border-radius: 10px;
 	word-wrap: break-word;
 	.task-header,
@@ -309,7 +327,6 @@ body {
 		grid-template-columns: auto auto min-content;
 		align-items: center;
 		h3 {
-			font-size: 18px;
 			cursor: pointer;
 			margin-right: 1rem;
 		}
@@ -317,6 +334,7 @@ body {
 			margin-left: auto;
 			margin-right: 2rem;
 			font-weight: $fw-light;
+
 			text-align: right;
 		}
 		.due-today-task {
@@ -333,8 +351,9 @@ body {
 	}
 	.task-footer {
 		display: grid;
-		grid-template-columns: repeat(4, auto) max-content max-content;
-		gap: 2rem;
+		grid-template-rows: 1fr 1fr;
+		grid-template-columns: repeat(2, auto) max-content;
+		gap: 1rem;
 		p:not(span) {
 			color: $clr-accent-100;
 		}
@@ -351,6 +370,7 @@ body {
 			margin-left: auto;
 		}
 	}
+
 	.button {
 		width: fit-content;
 		justify-self: end;

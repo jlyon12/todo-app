@@ -1,4 +1,8 @@
 const cacheDom = (() => {
+	const btnToggleSidebar = document.getElementById('btnToggleSidebar');
+	const projectSidebar = document.querySelector('.project-container');
+	const taskContainer = document.querySelector('.tasks-container');
+
 	// Task Elements
 	const taskCollectionTitle = document.getElementById('taskCollectionTitle');
 	const addTaskIcon = document.getElementById('addTaskIcon');
@@ -7,7 +11,7 @@ const cacheDom = (() => {
 	const btnsDeleteTasks = () => document.querySelectorAll('.btnDeleteTask');
 	const btnsMarkComplete = () => document.querySelectorAll('.btnMarkComplete');
 	const btnsEditTasks = () => document.querySelectorAll('.btnEditTask');
-
+	const getTaskWrappers = () => document.querySelectorAll('.task-wrapper');
 	// Task Filter Elements
 	const allTasksFilter = document.getElementById('allTaskFilter');
 	const inboxFilter = document.getElementById('inboxFilter');
@@ -42,6 +46,7 @@ const cacheDom = (() => {
 	const btnSubmitUpdatedTask = document.getElementById('btnSubmitUpdatedTask');
 	const btnReset = document.getElementById('#btnResetForm');
 	return {
+		taskContainer,
 		// Functions for updating nodeLists
 		btnsDeleteTasks,
 		btnsEditTasks,
@@ -49,6 +54,7 @@ const cacheDom = (() => {
 		linksProjects,
 		btnsDeleteProject,
 		btnsEditProject,
+		getTaskWrappers,
 		// Links for Project Filters
 		allTasksFilter,
 		inboxFilter,
@@ -56,6 +62,8 @@ const cacheDom = (() => {
 		weekFilter,
 		completedFilter,
 		// Project Form and Project Elements
+		btnToggleSidebar,
+		projectSidebar,
 		formProject,
 		listProjects,
 		listItemsProjects,

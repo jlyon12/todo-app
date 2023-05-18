@@ -2,6 +2,8 @@
 import { projectController, taskController } from './appController';
 import cacheDom from './cacheDom';
 import {
+	toggleSidebar,
+	hideSidebar,
 	hideTaskForm,
 	showTaskForm,
 	updateTaskContainerTitle,
@@ -30,6 +32,7 @@ import {
 } from './storage';
 
 const {
+	btnToggleSidebar,
 	// Functions for updating nodeLists
 	btnsDeleteTasks,
 	btnsEditTasks,
@@ -79,6 +82,7 @@ const addClickListenersToRenderedNodes = () => {
 	});
 };
 
+btnToggleSidebar.addEventListener('click', toggleSidebar);
 // Handle Filtering Tasks
 allTasksFilter.addEventListener('click', () => {
 	updateTaskContainerTitle('All Tasks');
@@ -242,6 +246,7 @@ window.addEventListener('load', () => {
 	if (checkForFirstTimeOpened() === true) {
 		projectController.initializeDefaultProjects();
 		taskController.initializeDefaultTasks();
+		toggleSidebar();
 		renderProjectList();
 		renderProjectTasks('Getting Started');
 		updateTaskContainerTitle('Getting Started');
@@ -254,11 +259,14 @@ window.addEventListener('load', () => {
 		loadAllProjects();
 		renderProjectList();
 		renderProjectSelectOptions();
+		hideSidebar();
 	}
 	if (localStorage.getItem('savedTasks') !== null) {
 		loadAllTasks();
 		renderInboxTasks();
 		updateTaskContainerTitle('Inbox');
+		hideSidebar();
 	}
+
 	addClickListenersToRenderedNodes();
 });
