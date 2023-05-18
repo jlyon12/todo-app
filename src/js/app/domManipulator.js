@@ -290,9 +290,12 @@ const createTaskWrapper = (task) => {
 const renderAllTasks = () => {
 	const { taskCollection } = cacheDom;
 	taskCollection.textContent = '';
-	taskController.sortCompletedTasks().forEach((task) => {
-		createTaskWrapper(task);
-	});
+	taskController
+		.sortCompletedTasks()
+		.filter((task) => task.isCompleted === false)
+		.forEach((task) => {
+			createTaskWrapper(task);
+		});
 };
 
 const renderInboxTasks = () => {
@@ -300,6 +303,8 @@ const renderInboxTasks = () => {
 	taskCollection.textContent = '';
 	projectController
 		.sortProjectTasksByCreationTime('Inbox')
+		.filter((task) => task.isCompleted === false)
+
 		.forEach((task) => createTaskWrapper(task));
 };
 
@@ -308,19 +313,26 @@ const renderProjectTasks = (projectName) => {
 	taskCollection.textContent = '';
 	projectController
 		.sortProjectCompletedTasks(projectName)
+		.filter((task) => task.isCompleted === false)
+
 		.forEach((task) => createTaskWrapper(task));
-	console.log(projectController.getProjectTasks(projectName));
 };
 const renderTodayTasks = () => {
 	const { taskCollection } = cacheDom;
 	taskCollection.textContent = '';
-	taskController.getTodaysTasks().forEach((task) => createTaskWrapper(task));
+	taskController
+		.getTodaysTasks()
+		.filter((task) => task.isCompleted === false)
+		.forEach((task) => createTaskWrapper(task));
 };
 
 const renderWeekTasks = () => {
 	const { taskCollection } = cacheDom;
 	taskCollection.textContent = '';
-	taskController.getWeekTasks().forEach((task) => createTaskWrapper(task));
+	taskController
+		.getWeekTasks()
+		.filter((task) => task.isCompleted === false)
+		.forEach((task) => createTaskWrapper(task));
 };
 
 const renderCompletedTasks = () => {
