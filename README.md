@@ -10,7 +10,7 @@ Users have the ability to create, modify, and delete tasks. Projects can be crea
 
 ## Getting Started
 
-Visit the live link <a href="https://probableactions.github.io/todo-app/">here.</a>
+Visit the live link <a href="https://jlyon12.github.io/todo-app/">here.</a>
 
 Visit the project "Getting Started" to learn how to navitage the application.
 
